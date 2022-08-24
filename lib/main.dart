@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'app/const/global.const.dart';
 import 'app/const/route.const.dart';
 import 'app/screens/home.screen.dart';
 import 'app/screens/login.screen.dart';
@@ -12,6 +14,9 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  authService.listenToUser().onData((User? data) {
+    isAuth = data != null;
+  });
   runApp(const MyApp());
 }
 

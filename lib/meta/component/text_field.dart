@@ -1,45 +1,91 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class CustomTextField extends StatefulWidget {
-  const CustomTextField({
-    Key? key,
-    this.inputFormatter,
-    this.hint,
-    this.icon,
-    this.keyboardType,
-    this.isPassword = false,
-    this.controller,
-  }) : super(key: key);
-  final List<TextInputFormatter>? inputFormatter;
-  final String? hint;
-  final IconData? icon;
-  final TextInputType? keyboardType;
-  final bool isPassword;
+class CustomTextField extends StatelessWidget {
+  const CustomTextField(
+      {this.controller,
+      this.focusNode,
+      this.onChanged,
+      this.inputFormatters,
+      this.hint,
+      this.prefixText,
+      this.autocorrect = false,
+      this.height,
+      this.width,
+      this.autofillHints,
+      this.textCapitalization = TextCapitalization.none,
+      this.onTap,
+      this.onEditingComplete,
+      this.onFieldSubmitted,
+      this.onSaved,
+      this.readOnly = false,
+      this.maxLines = 1,
+      this.obsecured = false,
+      this.textInputType = TextInputType.text,
+      this.validator,
+      this.icon,
+      Key? key})
+      : super(key: key);
+  final bool autocorrect, readOnly, obsecured;
+  final FocusNode? focusNode;
   final TextEditingController? controller;
-  @override
-  State<CustomTextField> createState() => _CustomTextFieldState();
-}
-
-class _CustomTextFieldState extends State<CustomTextField> {
+  final ValueChanged<String>? onChanged;
+  final List<TextInputFormatter>? inputFormatters;
+  final String? hint, prefixText;
+  final int maxLines;
+  final IconData? icon;
+  final double? height, width;
+  final TextCapitalization textCapitalization;
+  final Iterable<String>? autofillHints;
+  final GestureTapCallback? onTap;
+  final TextInputType textInputType;
+  final VoidCallback? onEditingComplete;
+  final ValueChanged<String>? onFieldSubmitted;
+  final FormFieldSetter<String>? onSaved;
+  final FormFieldValidator<String>? validator;
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: height ?? 40,
+      width: width ?? 300,
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(0.2),
+        color: Colors.grey[200],
+        border: Border.all(
+          color: Colors.grey[200]!,
+          width: 0,
+        ),
         borderRadius: BorderRadius.circular(10),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: TextFormField(
-        controller: widget.controller,
-        obscureText: widget.isPassword,
-        decoration: InputDecoration(
-          icon: Icon(widget.icon),
-          border: InputBorder.none,
-          hintText: widget.hint,
+      child: Center(
+        child: TextFormField(
+          keyboardType: textInputType,
+          autocorrect: autocorrect,
+          autofillHints: autofillHints,
+          focusNode: focusNode,
+          onChanged: onChanged,
+          onTap: onTap,
+          onEditingComplete: onEditingComplete,
+          onFieldSubmitted: onFieldSubmitted,
+          onSaved: onSaved,
+          validator: validator,
+          controller: controller,
+          readOnly: readOnly,
+          obscureText: obsecured,
+          maxLines: maxLines,
+          decoration: InputDecoration(
+            isDense: true,
+            hintText: hint,
+            icon: Icon(icon),
+            prefixText: prefixText,
+            contentPadding: EdgeInsets.zero,
+            border: InputBorder.none,
+            fillColor: Colors.grey[200],
+          ),
+          inputFormatters: inputFormatters,
+          textCapitalization: textCapitalization,
         ),
-        keyboardType: widget.keyboardType,
-        inputFormatters: widget.inputFormatter,
       ),
     );
   }

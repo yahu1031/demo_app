@@ -9,33 +9,57 @@ class AuthService {
   factory AuthService() => _instance;
   AuthService._();
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   /// Get the current user
-  Future<User?> getUser() async => _auth.currentUser;
+  User? get getUser => auth.currentUser;
+
+  String get name => getUser?.displayName ?? 'Your name';
 
   /// Sign in with phone number
-  Future<void> authenticateUser(String phone) async {
+  Future<String?> getOtp(
+    String phone, {
+    required PhoneCodeSent codeSent,
+    required PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout,
+  }) async {
     try {
-      await _auth.verifyPhoneNumber(
+      String? vCode;
+      await auth.verifyPhoneNumber(
         phoneNumber: phone,
         timeout: const Duration(seconds: 60),
         verificationCompleted: (AuthCredential credential) async {
-          UserCredential res = await _auth.signInWithCredential(credential);
-          dev.log(res.user.toString());
+          dev.log(credential.token.toString());
         },
         verificationFailed: (FirebaseAuthException exception) {
           dev.log('verificationFailed : ${exception.message}');
         },
         codeSent: (String verificationId, [int? forceResendingToken]) {
+          vCode = verificationId;
           dev.log('codeSent : $verificationId');
+          dev.log('forceResendingToken : $forceResendingToken');
+          codeSent.call(verificationId, forceResendingToken);
         },
         codeAutoRetrievalTimeout: (String verificationId) {
           dev.log('codeAutoRetrievalTimeout : $verificationId');
         },
       );
+      return vCode;
     } catch (e) {
       dev.log(e.toString());
+      return null;
+    }
+  }
+
+  /// Verify the OTP
+  Future<UserCredential?> verifyOtp(String vCode, String otp) async {
+    try {
+      UserCredential credential = await auth.signInWithCredential(
+          PhoneAuthProvider.credential(verificationId: vCode, smsCode: otp));
+      dev.log(credential.user.toString());
+      return credential;
+    } catch (e) {
+      dev.log(e.toString());
+      return null;
     }
   }
 

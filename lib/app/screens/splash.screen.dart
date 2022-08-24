@@ -1,6 +1,7 @@
-import '../const/const.dart';
-import '../const/route.const.dart';
 import 'package:flutter/material.dart';
+
+import '../const/global.const.dart';
+import '../const/route.const.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -15,27 +16,17 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Future<void>.delayed(
       const Duration(milliseconds: 1500),
-      () => Navigator.pushReplacementNamed(context, RouteNames.login),
+      () => Navigator.pushReplacementNamed(
+          context, isAuth ? RouteNames.home : RouteNames.login),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF6995A6),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // Image.network('https://source.unsplash.com/random'),
-            Text(
-              AppConst.appName,
-              style: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
+        child: Image.asset('assets/logo.jpeg'),
       ),
     );
   }

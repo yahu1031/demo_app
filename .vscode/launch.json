@@ -6,7 +6,7 @@
             "request": "launch",
             "program": "lib/main.dart",
             "args": [
-                "-v"
+                // "-v"
             ]
         }
     ]
