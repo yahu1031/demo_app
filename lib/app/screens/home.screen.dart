@@ -122,10 +122,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text('Error while fetching data'),
               );
             }
-            for (QueryDocumentSnapshot<Map<String, dynamic>> doc
-                in snapshot.data?.docs ?? []) {
-              print(doc.data());
-            }
+            /// Only for testing
+            // for (QueryDocumentSnapshot<Map<String, dynamic>> doc
+            //     in snapshot.data?.docs ?? []) {
+            //   print(doc.data());
+            // }
             return Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
