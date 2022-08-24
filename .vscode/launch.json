@@ -6,6 +6,7 @@
             "request": "launch",
             "program": "lib/main.dart",
             "args": [
+                // Uncomment this if you want to see verbose logs
                 // "-v"
             ]
         }
