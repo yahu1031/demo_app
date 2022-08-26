@@ -34,9 +34,8 @@ class _CarScreenState extends State<CarScreen> {
     TfliteAudio.setSpectrogramParameters(nMFCC: 40, hopLength: 16384);
   }
 
-  String recognition = '';
-
   Future<void> _recorder() async {
+    String recognition = '';
     if (!_recording) {
       setState(() => _recording = true);
       result = TfliteAudio.startAudioRecognition(
@@ -50,11 +49,20 @@ class _CarScreenState extends State<CarScreen> {
           recognition = event['recognitionResult'];
         });
         log(recognition);
-      }).onData((_) {
-        log(_.toString());
+      }).onData((Map<dynamic, dynamic> data) async {
+        log(data.toString());
         setState(() {
           _recording = false;
+          _sound = data['recognitionResult'];
+          _sound = _sound.substring(_sound.indexOf(' ') + 1, _sound.length);
         });
+        await showDialog(
+          context: context,
+          builder: ((BuildContext context) => AlertDialog(
+                title: const Text('Recognition'),
+                content: Text(_sound),
+              )),
+        );
       });
     }
   }
@@ -165,15 +173,7 @@ class _CarScreenState extends State<CarScreen> {
                 await TfliteAudio.stopAudioRecognition();
                 setState(() {
                   _recording = false;
-                  _sound = recognition.split(' ')[1];
                 });
-                await showDialog(
-                  context: context,
-                  builder: ((BuildContext context) => AlertDialog(
-                        title: const Text('Recognition'),
-                        content: Text(_sound),
-                      )),
-                );
               }
             : _recorder,
         child: Icon(
