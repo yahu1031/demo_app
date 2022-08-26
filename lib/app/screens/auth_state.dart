@@ -9,10 +9,10 @@ import 'login.screen.dart';
 class StateCheck extends StatefulWidget {
   const StateCheck({Key? key}) : super(key: key);
   @override
-  _StateCheckState createState() => _StateCheckState();
+  StateCheckState createState() => StateCheckState();
 }
 
-class _StateCheckState extends State<StateCheck> {
+class StateCheckState extends State<StateCheck> {
   final FirebaseAuth mAuth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) => Scaffold(

@@ -5,6 +5,7 @@ import '../../meta/component/sheets/car.sheet.dart';
 import '../const/global.const.dart';
 import '../const/route.const.dart';
 import '../notifiers/auth.notifier.dart';
+import 'car.screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -131,75 +132,76 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: ListView.builder(
                       itemCount: docs.length,
                       itemBuilder: (BuildContext context, int i) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Container(
-                                      height: 100,
-                                      width: 100,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.grey.withOpacity(0.2),
-                                        border: Border.all(
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                      padding: const EdgeInsets.all(5),
-                                      child: Image.asset(
-                                        'assets/car1.png',
-                                        height: 50,
-                                        width: 50,
+                        return GestureDetector(
+                          onTap: () async => Navigator.push(
+                              context,
+                              MaterialPageRoute<CarScreen>(
+                                  builder: (BuildContext context) =>
+                                      CarScreen(car: docs[i].data()))),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Container(
+                                    height: 100,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.grey.withOpacity(0.2),
+                                      border: Border.all(
+                                        color: Colors.grey,
                                       ),
                                     ),
-                                    const SizedBox(width: 10),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          docs[i].data()['name'],
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 24,
-                                          ),
-                                        ),
-                                        Text(
-                                          docs[i].data()['number'],
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                        Text(
-                                          docs[i].data()['color'],
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                        Text(
-                                          docs[i].data()['model'],
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
+                                    padding: const EdgeInsets.all(5),
+                                    child: Image.asset(
+                                      'assets/car1.png',
+                                      height: 50,
+                                      width: 50,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        docs[i].data()['name'],
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 24,
+                                        ),
+                                      ),
+                                      Text(
+                                        docs[i].data()['number'],
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      Text(
+                                        docs[i].data()['color'],
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      Text(
+                                        docs[i].data()['model'],
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
+                          ),
                         );
                       }),
                 ),

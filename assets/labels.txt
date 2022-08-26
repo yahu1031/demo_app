@@ -1,0 +1,18 @@
+0 AC compressor and air filter assembler
+1 AC noise
+2 Air filter damage hose
+3 Alternator output not coming
+4 Injector not working
+5 Injector,spares fail/wiring cuts
+6 Nossil Diesel flow stops
+7 Nossil noise/injector noise
+8 Timing chain noise
+9  Turbo problem
+10 Water leakage
+11 brake switch fault
+12 clipping loose
+13 dissel injector noise 
+14 no problem
+15 starter motor fault 
+16 steering sticky noise
+17 wall tappet clearance
