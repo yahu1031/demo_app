@@ -116,100 +116,95 @@ class _HomeScreenState extends State<HomeScreen> {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            }
-            if (snapshot.hasError) {
+            } else if (snapshot.hasError) {
               return const Center(
                 child: Text('Error while fetching data'),
               );
-            }
-            if (!snapshot.hasData) {
+            } else if (docs == null || docs.isEmpty) {
               return const Center(
                 child: Text('No cars added yet'),
               );
-            }
-            /// Only for testing
-            // for (QueryDocumentSnapshot<Map<String, dynamic>> doc
-            //     in snapshot.data?.docs ?? []) {
-            //   print(doc.data());
-            // }
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: ListView.builder(
-                    itemCount: docs?.length ?? 0,
-                    itemBuilder: (BuildContext context, int i) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Row(
-                                children: <Widget>[
-                                  Container(
-                                    height: 100,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.grey.withOpacity(0.2),
-                                      border: Border.all(
-                                        color: Colors.grey,
+            } else {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: ListView.builder(
+                      itemCount: docs.length,
+                      itemBuilder: (BuildContext context, int i) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      height: 100,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.grey.withOpacity(0.2),
+                                        border: Border.all(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      padding: const EdgeInsets.all(5),
+                                      child: Image.asset(
+                                        'assets/car1.png',
+                                        height: 50,
+                                        width: 50,
                                       ),
                                     ),
-                                    padding: const EdgeInsets.all(5),
-                                    child: Image.asset(
-                                      'assets/car1.png',
-                                      height: 50,
-                                      width: 50,
+                                    const SizedBox(width: 10),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          docs[i].data()['name'],
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 24,
+                                          ),
+                                        ),
+                                        Text(
+                                          docs[i].data()['number'],
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                        Text(
+                                          docs[i].data()['color'],
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                        Text(
+                                          docs[i].data()['model'],
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        docs?[i].data()['name'],
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 24,
-                                        ),
-                                      ),
-                                      Text(
-                                        docs?[i].data()['number'],
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                      Text(
-                                        docs?[i].data()['color'],
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                      Text(
-                                        docs?[i].data()['model'],
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      );
-                    }),
-              ),
-            );
+                          ],
+                        );
+                      }),
+                ),
+              );
+            }
           }),
     );
   }
