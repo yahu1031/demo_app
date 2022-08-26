@@ -149,6 +149,11 @@ class _CarScreenState extends State<CarScreen> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 40),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text('Find a mechanic'),
+                )
               ],
             ),
           ),
