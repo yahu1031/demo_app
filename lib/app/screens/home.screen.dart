@@ -122,6 +122,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text('Error while fetching data'),
               );
             }
+            if (!snapshot.hasData) {
+              return const Center(
+                child: Text('No cars added yet'),
+              );
+            }
             /// Only for testing
             // for (QueryDocumentSnapshot<Map<String, dynamic>> doc
             //     in snapshot.data?.docs ?? []) {
